@@ -69,7 +69,7 @@ export default function ProjectsSection() {
   }
 
   return (
-    <section id="projects" className="py-20 bg-slate-900/50 backdrop-blur-sm">
+    <section id="projects" className="py-20 bg-slate-900/50 backdrop-blur-xs">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <motion.div
