@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Github, Linkedin, Twitter, Mail, Send } from "lucide-react";
+import { Github, Linkedin, Mail, Send } from "lucide-react";
 
 export default function Collaboration() {
   const [ref, inView] = useInView({
@@ -18,7 +18,6 @@ export default function Collaboration() {
     message: "",
   });
 
-  // const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
 
@@ -26,27 +25,40 @@ export default function Collaboration() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus(null); // Reset previous status
 
     try {
-      const response = await fetch("https://nagraj-port.onrender.com/api/send-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://nagraj-port.onrender.com/api/send-email",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
 
       const result = await response.json();
+
       if (result.success) {
         setSubmitStatus("success");
-        setFormData({ name: "", email: "", subject: "", message: "" });
+        setFormData({ name: "", email: "", project: "", message: "" });
+        alert("Message sent successfully!");
       } else {
         setSubmitStatus("error");
+        alert("Failed to send the message. Please try again.");
       }
     } catch (error) {
       console.error("Error sending message:", error);
       setSubmitStatus("error");
+      alert("An error occurred. Please try again later.");
     } finally {
       setIsSubmitting(false);
       setTimeout(() => setSubmitStatus(null), 5000);
@@ -83,10 +95,10 @@ export default function Collaboration() {
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-white dark:text-white">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-white">
             Let's Collaborate
           </h2>
-          <p className="text-center text-white dark:text-gray-300 mb-12 max-w-2xl mx-auto">
+          <p className="text-center text-white mb-12 max-w-2xl mx-auto">
             Have a project in mind? I'd love to hear about it. Let's work
             together to bring your ideas to life.
           </p>
@@ -200,10 +212,6 @@ export default function Collaboration() {
                     <p>
                       Providing continued support even after project completion.
                     </p>
-                  </li>
-                  <li>
-                    <h4 className="font-semibold">Transparent Communication</h4>
-                    <p>Regular updates and clear communication throughout.</p>
                   </li>
                 </ul>
               </div>
