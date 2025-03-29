@@ -1,77 +1,69 @@
 "use client";
 
 import { useCallback } from "react";
-import { Particles } from "@tsparticles/react";
-import { loadSlim } from "@tsparticles/slim";
+import { loadSlim } from "tsparticles-slim"; // Lightweight version
+import Particles from "react-tsparticles";
 
 export default function ParticlesBackground() {
   const particlesInit = useCallback(async (engine) => {
-    await loadSlim(engine);
+    await loadSlim(engine); // Load slim version for better performance
   }, []);
 
   return (
     <Particles
-      className="fixed inset-0 -z-10"
+      id="tsparticles"
       init={particlesInit}
       options={{
         background: {
-          color: { value: "#000000" }, // ✅ Dark background
+          color: "#000000ff", // Dark slate background
         },
-        fpsLimit: 120,
-        interactivity: {
-          events: {
-            onHover: {
-              enable: true,
-              mode: "slow", // ✅ Slow down effect on hover
-            },
-            onClick: {
-              enable: true,
-              mode: "push",
-            },
-          },
-          modes: {
-            slow: {
-              factor: 0.1, // ✅ Stronger slow-down effect
-              radius: 400, // ✅ Larger hover area
-            },
-            push: {
-              quantity: 6,
-            },
-          },
-        },
+        fpsLimit: 60,
         particles: {
-          color: { value: "#ffffff" }, // ✅ Bright white particles
-          links: {
-            color: "#4f46e5", // ✅ Soft blue links
-            distance: 150,
-            enable: true,
-            opacity: 0.7, // ✅ More visible link opacity
-            width: 2, // ✅ Thicker links for visibility
+          number: {
+            value: 100, // Moderate particle count
+            density: { enable: true, area: 800 },
+          },
+          color: { value: "#ffffff" }, // White particles
+          shape: { type: "circle" },
+          opacity: {
+            value: 0.7,
+            random: false,
+            anim: { enable: false },
+          },
+          size: {
+            value: { min: 1, max: 4 }, // Varying particle sizes
+            random: true,
           },
           move: {
             enable: true,
-            speed: 1, // ✅ Slightly faster movement
+            speed: 0.6, // Slow floating motion
             direction: "none",
-            random: false,
+            random: true,
             straight: false,
             outModes: { default: "out" },
           },
-          number: {
-            density: { enable: true, area: 800 },
-            value: 150, // ✅ More particles for visibility
+          links: {
+            enable: true,
+            distance: 150,
+            color: "#ffffff",
+            opacity: 0.3,
+            width: 1,
           },
-          opacity: {
-            value: 1, // ✅ Fully visible particles
+        },
+        interactivity: {
+          events: {
+            onHover: { enable: true, mode: "repulse" },
+            onClick: { enable: true, mode: "push" },
           },
-          shape: {
-            type: "circle",
-          },
-          size: {
-            value: { min: 3, max: 6 }, // ✅ Larger particles for better visibility
+          modes: {
+            repulse: { distance: 100, duration: 0.4 },
+            push: { quantity: 4 },
           },
         },
         detectRetina: true,
       }}
+      className="absolute inset-0 -z-10"
     />
   );
 }
+
