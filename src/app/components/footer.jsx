@@ -33,9 +33,8 @@ export default function Footer() {
             <a href="#" className="text-gray-400 hover:text-white transition-colors">
               <FaLinkedin size={20} />
             </a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
-              <FaTwitter size={20} />
-            </a>
+
+            
           </motion.div>
 
           <motion.div
