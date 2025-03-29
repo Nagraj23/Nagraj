@@ -20,7 +20,7 @@ export default function ParticlesBackground() {
         fpsLimit: 60,
         particles: {
           number: {
-            value: 100, // Moderate particle count
+            value: 60, // Moderate particle count
             density: { enable: true, area: 800 },
           },
           color: { value: "#ffffff" }, // White particles
