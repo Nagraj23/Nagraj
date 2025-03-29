@@ -65,7 +65,7 @@ export default function IntroSection() {
             <a href="www.linkedin.com/in/nagraj-nandal-71a361333" className="text-gray-400 hover:text-white transition-colors">
               <FaLinkedin size={24} />
             </a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
+            <a href="https://www.instagram.com/nagraj_np2308/" className="text-gray-400 hover:text-white transition-colors">
               <FaInstagram size={24} />
             </a>
           </motion.div>
