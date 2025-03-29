@@ -87,7 +87,7 @@ export default function Collaboration() {
     <section
       id="contact"
       ref={ref}
-      className="py-20 bg-slate-900/50 "
+      className="py-20 bg-slate-900/50 backdrop-blur-xs"
     >
       <div className="container mx-auto px-4">
         <motion.div
