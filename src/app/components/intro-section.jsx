@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react"
 import { motion } from "framer-motion"
-import { FaGithub, FaLinkedin, FaTwitter,FaInstagram } from "react-icons/fa"
+import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from "react-icons/fa"
 import Typed from "typed.js"
 
 export default function IntroSection() {
@@ -32,23 +32,23 @@ export default function IntroSection() {
             transition={{ duration: 0.5 }}
             className="mb-4"
           >
-            <span className="text-blue-500 text-xl">Hello, I'm</span>
+            <span className="text-blue-500 text-xl font-sans">Hello, I'm</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-5xl md:text-7xl font-bold text-white mb-4"
+            className="text-5xl md:text-7xl font-bold text-white mb-4 font-sans"
           >
-            Nagraj nandal
+            Nagraj Nandal
           </motion.h1>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="text-2xl md:text-3xl text-gray-300 mb-8"
+            className="text-2xl md:text-3xl text-gray-300 mb-8 font-sans"
           >
             I'm a <span ref={typedRef} className="text-blue-500"></span>
           </motion.div>
@@ -106,4 +106,3 @@ export default function IntroSection() {
     </section>
   )
 }
-

@@ -43,7 +43,6 @@ export default function ProjectsSection() {
       githubLink: "#",
       liveLink: "#",
     },
-   
   ]
 
   const filteredProjects =
@@ -79,7 +78,7 @@ export default function ProjectsSection() {
             viewport={{ once: true }}
             className="mb-4"
           >
-            <span className="text-blue-500 text-lg">My Work</span>
+            <span className="text-blue-500 text-lg font-sans">My Work</span>
           </motion.div>
 
           <motion.h2
@@ -87,7 +86,7 @@ export default function ProjectsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-4xl font-bold text-white mb-8"
+            className="text-4xl font-bold text-white mb-8 font-sans"
           >
             Recent Projects
           </motion.h2>
@@ -103,7 +102,7 @@ export default function ProjectsSection() {
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-6 py-2 rounded-full capitalize transition-colors ${
+                className={`px-6 py-2 rounded-full capitalize transition-colors font-sans ${
                   activeCategory === category
                     ? "bg-blue-500 text-white"
                     : "bg-slate-800 text-gray-300 hover:bg-slate-700"
@@ -133,6 +132,7 @@ export default function ProjectsSection() {
                   src={project.image}
                   alt={project.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw" // Added sizes prop
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
@@ -174,4 +174,3 @@ export default function ProjectsSection() {
     </section>
   )
 }
-
