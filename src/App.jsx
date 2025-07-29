@@ -49,7 +49,7 @@ function App() {
 
   return (
     <ThemeProvider>
-      <div className="">
+    
         <Cursor
   blobType="circle"
   fillColor="#5227FF"
@@ -75,7 +75,7 @@ function App() {
         <Projects />
         <Education />
         <Contact />
-      </div>
+    
     </ThemeProvider>
   );
 }

@@ -15,7 +15,7 @@ const Navigation = ({ activeSection, scrollToSection }) => {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const navItems = ["hero", "about", "skills", "projects", "education", "contact"]
+  const navItems = ["", "about", "skills", "projects", "education", "contact"]
 
   return (
     <nav
