@@ -14,8 +14,9 @@ import {
 } from "react-icons/si";
 import { motion, AnimatePresence } from "framer-motion";
 import InVision from "../assets/invision.jpg";
-import Note from "../assets/notations.jpg";
+import Note from "../assets/image.png";
 import Port from "../assets/port.png";
+import Shieldx from "../assets/shieldx.png"
 
 const categories = ["all", "web", "mobile"];
 
@@ -40,6 +41,16 @@ const projects = [
     githubLink: "https://github.com/Nagraj23/Notations-Web",
     liveLink: "https://notations-web.vercel.app/",
   },
+  {
+  title: "SHIELDX",
+  description:
+    "A smart personal safety app for solo travelers, built with React and Java Spring. Features real-time alerts, location sharing, and emergency tools.",
+  image: Shieldx,
+  category: "web",
+  technologies: ["React", "Java", "Spring Boot", "Twilio API", "Postman"],
+  githubLink: "https://github.com/Yogesh-Mane-07/shieldxWeb",
+  liveLink: "", // Add deployed link if available later
+},
   {
     title: "Portfolio Website",
     description:
