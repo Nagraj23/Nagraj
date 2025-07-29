@@ -48,13 +48,7 @@ const Navigation = ({ activeSection, scrollToSection }) => {
           ))}
 
           {/* 🌗 Theme toggle button */}
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-800 transition-all duration-300"
-            aria-label="Toggle Theme"
-          >
-            {isDark ? <Sun size={20} className="text-yellow-400" /> : <Moon size={20} className="text-gray-800 dark:text-white" />}
-          </button>
+         
         </div>
 
         {/* ☰ Mobile Menu Button */}
@@ -84,13 +78,7 @@ const Navigation = ({ activeSection, scrollToSection }) => {
             ))}
 
             {/* 🌙 Theme toggle in mobile menu */}
-            <button
-              onClick={toggleTheme}
-              className="flex items-center gap-2 text-left p-3 text-lg text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 transition-all duration-300"
-            >
-              {isDark ? <Sun size={20} /> : <Moon size={20} />}
-              Toggle Theme
-            </button>
+            
           </div>
         </div>
       )}

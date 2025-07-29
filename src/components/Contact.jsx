@@ -1,8 +1,53 @@
+import { useState } from "react";
 import { useScrollAnimation } from "../hooks/useScrollAnimation";
 import { FaInstagram, FaLinkedin, FaGithub } from "react-icons/fa";
 
 const Contact = () => {
   const [ref, isVisible] = useScrollAnimation(0.2);
+
+  // 1. Form state
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  // 2. Input handler
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // 3. Submit handler
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const res = await fetch("https://nagraj-port.onrender.com/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await res.json();
+      if (result.success) {
+        setSubmitStatus("success");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        setSubmitStatus("error");
+      }
+    } catch (err) {
+      console.error("Email send failed:", err);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitStatus(null), 5000);
+    }
+  };
 
   const socials = [
     {
@@ -46,20 +91,26 @@ const Contact = () => {
           }`}
         >
           {/* Left Side: Contact Form */}
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <h3 className="text-2xl font-bold mb-4 text-blue-600 dark:text-blue-400">
               Send Me a Message 💬
             </h3>
 
+            {/* Inputs */}
             {[
-              { label: "Your Name", type: "text" },
-              { label: "Your Email", type: "email" },
-              { label: "Subject", type: "text" },
+              { label: "Your Name", type: "text", name: "name" },
+              { label: "Your Email", type: "email", name: "email" },
+              { label: "Subject", type: "text", name: "subject" },
             ].map((field, i) => (
               <div key={i} className="relative">
                 <input
                   type={field.type}
+                  name={field.name}
+                  value={formData[field.name]}
+                  onChange={handleChange}
                   placeholder=" "
+                  required
+                  disabled={isSubmitting}
                   className="peer w-full p-4 bg-white dark:bg-slate-950 border border-gray-300 dark:border-slate-700 rounded-xl text-gray-900 dark:text-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 outline-none transition-all"
                 />
                 <label className="absolute left-4 top-4 text-gray-500 dark:text-gray-400 text-sm transition-all transform -translate-y-1 scale-90 peer-placeholder-shown:translate-y-2.5 peer-placeholder-shown:scale-100 peer-focus:-translate-y-1 peer-focus:scale-90 bg-white dark:bg-slate-950 px-1">
@@ -68,10 +119,16 @@ const Contact = () => {
               </div>
             ))}
 
+            {/* Message Textarea */}
             <div className="relative">
               <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
                 rows="5"
                 placeholder=" "
+                required
+                disabled={isSubmitting}
                 className="peer w-full p-4 bg-white dark:bg-slate-950 border border-gray-300 dark:border-slate-700 rounded-xl text-gray-900 dark:text-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 outline-none transition-all resize-none"
               ></textarea>
               <label className="absolute left-4 top-4 text-gray-500 dark:text-gray-400 text-sm transition-all transform -translate-y-1 scale-90 peer-placeholder-shown:translate-y-2.5 peer-placeholder-shown:scale-100 peer-focus:-translate-y-1 peer-focus:scale-90 bg-white dark:bg-slate-950 px-1">
@@ -79,12 +136,22 @@ const Contact = () => {
               </label>
             </div>
 
+            {/* Submit Button */}
             <button
               type="submit"
+              disabled={isSubmitting}
               className="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white font-bold text-lg rounded-xl hover:scale-105 hover:shadow-xl transition-all duration-300 uppercase tracking-wide"
             >
-              Send Message 🚀
+              {isSubmitting ? "Sending..." : "Send Message 🚀"}
             </button>
+
+            {/* Status Message */}
+            {submitStatus === "success" && (
+              <p className="text-green-500 text-sm">Message sent successfully!</p>
+            )}
+            {submitStatus === "error" && (
+              <p className="text-red-500 text-sm">Something went wrong. Try again 😢</p>
+            )}
           </form>
 
           {/* Right Side: Social Links */}
@@ -93,29 +160,22 @@ const Contact = () => {
               Or Connect Directly 🔗
             </h3>
 
-            <div className="flex flex-col gap-6">
-              {socials.map((item, i) => (
-                <a
-                  key={i}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`flex items-center justify-between gap-4 p-5 rounded-xl bg-gradient-to-r ${item.color} hover:scale-[1.03] transition-all duration-300 shadow-lg`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="bg-black dark:bg-white p-2 rounded-full text-white dark:text-black shadow-md">
-                      {item.icon}
-                    </div>
-                    <span className="font-semibold text-white dark:text-white text-lg">
-                      {item.label}
-                    </span>
-                  </div>
-                  <span className="text-sm text-white dark:text-white font-medium opacity-80 group-hover:underline">
-                    Follow →
-                  </span>
-                </a>
-              ))}
-            </div>
+            <div className="flex flex-wrap gap-5">
+  {socials.map((item, i) => (
+    <a
+      key={i}
+      href={item.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`flex items-center gap-3 px-5 py-3 rounded-full bg-gradient-to-r ${item.color} text-white hover:scale-105 transition-all shadow-lg`}
+    >
+      <div className="bg-black/20 p-2 rounded-full">
+        {item.icon}
+      </div>
+      <span className="font-medium text-base">{item.label}</span>
+    </a>
+  ))}
+</div>
           </div>
         </div>
       </div>

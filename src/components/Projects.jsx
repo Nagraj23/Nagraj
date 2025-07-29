@@ -196,10 +196,10 @@ export default function ProjectsSection() {
                     {project.technologies.map((tech, i) => (
                       <span
                         key={i}
-                        className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1 dark:bg-blue-600/20 dark:text-blue-300"
+                        className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xl font-medium flex items-center gap-1 dark:bg-blue-600/20 dark:text-blue-300"
                       >
                         {techIcons[tech] || null}
-                        {tech}
+                        
                       </span>
                     ))}
                   </div>
