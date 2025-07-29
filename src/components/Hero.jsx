@@ -55,7 +55,7 @@ const Hero = () => {
             isVisible ? "animate-fade-in-up" : "opacity-0"
           }`}
         >
-          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black leading-tight flex flex-col sm:flex-row sm:justify-end items-center gap-2 sm:gap-4">
+          <h1 className="text-2xl relative sm:text-4xl lg:text-5xl font-black leading-tight flex flex-col sm:flex-row sm:justify-end items-center gap-2 sm:gap-4">
             <span className="inline-block bg-gradient-to-r from-[#0065F8] to-[#8DD8FF] bg-clip-text text-transparent">
               Think {"</>"}
             </span>
@@ -64,9 +64,9 @@ const Hero = () => {
               texts={["Build", "Break", "Innovate", "Repeat"]}
               mainClassName="px-3 py-2 bg-white dark:bg-[#041b20] text-black dark:text-white rounded-lg overflow-hidden"
               staggerFrom={"last"}
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "-120%" }}
+              initial = {{ y: "100%", opacity: 0 }}
+animate = {{ y: "0%", opacity: 1 }}
+exit = { {y: "-120%", opacity: 0 }}
               staggerDuration={0.05}
               splitLevelClassName="overflow-hidden"
               transition={{ type: "spring", damping: 35, stiffness: 300 }}

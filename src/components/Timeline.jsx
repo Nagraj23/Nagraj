@@ -12,15 +12,15 @@ export const Timeline = ({ data }) => {
       const rect = ref.current.getBoundingClientRect();
       setHeight(rect.height);
     }
-  }, [ref]);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 10%", "end 50%"],
+    offset: ["start 30%", "end 50%"],
   });
 
   const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
-  const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
+  const opacityTransform = useTransform(scrollYProgress, [0.01, 0.05], [0, 1]); // reduced delay for line
 
   return (
     <div
@@ -35,7 +35,7 @@ export const Timeline = ({ data }) => {
             key={index}
             className="flex justify-start pt-10 md:pt-20 md:gap-10"
           >
-            {/* Sticky title */}
+            {/* Sticky year */}
             <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
               <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-white dark:bg-black flex items-center justify-center">
                 <div className="h-4 w-4 rounded-full bg-[#3B82F6] border-4 border-white dark:border-slate-900" />
@@ -53,15 +53,15 @@ export const Timeline = ({ data }) => {
 
               <motion.div
                 style={{
-                  scaleY: useTransform(scrollYProgress, [0, 1], [0.8, 1]),
-                  opacity: useTransform(scrollYProgress, [0.05, 0.15], [0, 1]),
+                  scaleY: useTransform(scrollYProgress, [0, 1], [0.95, 1]),
+                  opacity: useTransform(scrollYProgress, [0.01, 0.05], [0, 1]), // faster fade
                   transformOrigin: "top center",
                 }}
                 className="bg-gradient-to-br from-white to-gray-50 dark:from-slate-800 dark:to-slate-900
-                border border-gray-200 dark:border-slate-700
-                p-6 rounded-2xl shadow-lg
-                hover:shadow-2xl hover:scale-[1.02] transition-all duration-500
-                relative overflow-hidden group"
+                  border border-gray-200 dark:border-slate-700
+                  p-6 rounded-2xl shadow-lg
+                  hover:shadow-2xl hover:scale-[1.02] transition-all duration-500
+                  relative overflow-hidden group"
               >
                 <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-1">
                   {item.degree}
@@ -84,9 +84,9 @@ export const Timeline = ({ data }) => {
         <div
           style={{ height: height + "px" }}
           className="absolute md:left-8 left-8 top-0 overflow-hidden w-[2px]
-          bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))]
-          from-transparent via-neutral-200 dark:via-neutral-700 to-transparent
-          [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]"
+            bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))]
+            from-transparent via-neutral-200 dark:via-neutral-700 to-transparent
+            [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]"
         >
           <motion.div
             style={{
@@ -94,8 +94,8 @@ export const Timeline = ({ data }) => {
               opacity: opacityTransform,
             }}
             className="absolute inset-x-0 top-0 w-[2px]
-            bg-gradient-to-t from-[#3B82F6] via-[#60A5FA] to-transparent
-            rounded-full"
+              bg-gradient-to-t from-[#3B82F6] via-[#60A5FA] to-transparent
+              rounded-full"
           />
         </div>
       </div>
